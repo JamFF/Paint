@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Paint</string>
+    <string name="off_screen">开启离屏绘制</string>
+    <string name="on_screen">关闭离屏绘制</string>
+
+    <array name="main_items">
+        <item>Gradient</item>
+        <item>BitmapShader</item>
+        <item>Xfermode</item>
+        <item>Xfermode Google Demo</item>
+        <item>Xfermodes</item>
+        <item>XfermodeEraser</item>
+        <item>ColorFilter</item>
+        <item>ColorMatrix</item>
+    </array>
+</resources>

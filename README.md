@@ -1,2 +1,2 @@
 # Paint
-Just a Android Paint learn demo
+Just a android Paint learn demo

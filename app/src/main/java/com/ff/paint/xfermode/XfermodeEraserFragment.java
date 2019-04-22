@@ -5,14 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ff.paint.widget.XfermodeEraserView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.ff.paint.widget.XfermodeEraserView;
+
 /**
- * description:
+ * description: 刮刮卡
  * author: FF
  * time: 2019/4/1 17:56
  */

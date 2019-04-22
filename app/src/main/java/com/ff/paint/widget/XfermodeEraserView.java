@@ -14,12 +14,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
-import com.ff.paint.R;
-
 import androidx.annotation.Nullable;
 
+import com.ff.paint.R;
+
 /**
- * description:
+ * description: 刮刮卡效果
  * author: FF
  * time: 2019/4/5 16:19
  */
@@ -57,6 +57,8 @@ public class XfermodeEraserView extends View {
     private void init() {
 
         mPaint = new Paint();
+        // 使用STROKE样式是为了随着手指的移动画出对应的轨迹
+        // 如果使用FILL或FILL_AND_STROKE会根据手指移动的路径绘制一个闭合的区域块，不能满足该效果
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(50);// 滑动宽度
 

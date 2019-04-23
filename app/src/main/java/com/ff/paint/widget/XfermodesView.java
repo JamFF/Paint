@@ -39,9 +39,12 @@ public class XfermodesView extends View {
     private Bitmap mDstB;
     private Shader mBG;
 
-    // 其中Sa全称Source alpha表示源图的Alpha通道；Sc全称Source color表示源图的颜色；
     // Da全称为Destination alpha表示目标图的Alpha
-    // TODO: 2019/4/5 不全，上面一行后续还有
+    // 效果作用于src源图像区域
+    // Sa全称Source alpha表示源图的Alpha通道；Sc全称Source color表示源图的颜色；
+    // Da全称为Destination alpha表示目标图的Alpha通道；Dc全称为Destination color表示目标图的颜色；
+    // [...,..]前半部分计算的是结果图像的Alpha通道值，“,”后半部分计算的是结果图像的颜色值。
+
     // 效果作用于src源图像区域，这里src源图像就是蓝色矩形，dst图像是黄色圆形。
     private static final Xfermode[] sModes = {
             // 所绘制不会提交到画布上
@@ -131,24 +134,25 @@ public class XfermodesView extends View {
         Log.d(TAG, "onMeasure: ");
     }
 
-    @Override
+    //google api的画法
+    /*@Override
     protected void onDraw(Canvas canvas) {
+
         canvas.drawColor(Color.WHITE);
 
         labelP.setTextAlign(Paint.Align.CENTER);
-
+        //设置是否使用双线性过滤来绘制Bitmap，图像在放大绘制的时候，默认使用的是最近邻插值过滤，
+        // 这种算法简单，但会出现马赛克现象；而如果开启了双线性过滤，就可以让结果图像显得更加平滑
         mPaint.setFilterBitmap(false);
 
         canvas.translate(15, 35);
-
         int x = 0;
         int y = 0;
         for (int i = 0; i < sModes.length; i++) {
             // draw the border
             mPaint.setStyle(Paint.Style.STROKE);
             mPaint.setShader(null);
-            canvas.drawRect(x - 0.5f, y - 0.5f,
-                    x + W + 0.5f, y + H + 0.5f, mPaint);
+            canvas.drawRect(x - 0.5f, y - 0.5f, x + W + 0.5f, y + H + 0.5f, mPaint);
 
             // draw the checker-board pattern
             mPaint.setStyle(Paint.Style.FILL);
@@ -158,16 +162,15 @@ public class XfermodesView extends View {
             // draw the src/dst example into our offscreen bitmap
             int sc = canvas.saveLayer(x, y, x + W, y + H, null);
             canvas.translate(x, y);
-            canvas.drawBitmap(makeDst(2 * W / 3, 2 * H / 3), 0, 0, mPaint);
+            canvas.drawBitmap(mDstB, 0, 0, mPaint);
             mPaint.setXfermode(sModes[i]);
-            canvas.drawBitmap(makeSrc(2 * W / 3, 2 * H / 3), W / 3, H / 3, mPaint);
+            canvas.drawBitmap(mSrcB, 0, 0, mPaint);
             mPaint.setXfermode(null);
             canvas.restoreToCount(sc);
 
             // draw the label
             labelP.setTextSize(20);
-            canvas.drawText(sLabels[i],
-                    x + W / 2, y - labelP.getTextSize() / 2, labelP);
+            canvas.drawText(sLabels[i], x + W / 2, y - labelP.getTextSize() / 2, labelP);
 
             x += W + 10;
 
@@ -198,6 +201,79 @@ public class XfermodesView extends View {
 
         p.setColor(0xFF66AAFF);
         c.drawRect(w / 3, h / 3, w * 19 / 20, h * 19 / 20, p);
+        return bm;
+    }*/
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        canvas.drawColor(Color.WHITE);
+
+        labelP.setTextAlign(Paint.Align.CENTER);
+
+        mPaint.setFilterBitmap(false);
+
+        canvas.translate(15, 35);
+
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < sModes.length; i++) {
+            // draw the border
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setShader(null);
+            canvas.drawRect(x - 0.5f, y - 0.5f,
+                    x + W + 0.5f, y + H + 0.5f, mPaint);
+
+            // draw the checker-board pattern
+            mPaint.setStyle(Paint.Style.FILL);
+            mPaint.setShader(mBG);
+            canvas.drawRect(x, y, x + W, y + H, mPaint);
+
+            // draw the src/dst example into our offscreen bitmap
+            // 使用离屏绘制
+            int sc = canvas.saveLayer(x, y, x + W, y + H, null);
+            canvas.translate(x, y);
+            canvas.drawBitmap(makeDst(2 * W / 3, 2 * H / 3), 0, 0, mPaint);
+            mPaint.setXfermode(sModes[i]);
+            canvas.drawBitmap(makeSrc(2 * W / 3, 2 * H / 3), W / 3, H / 3, mPaint);
+            mPaint.setXfermode(null);
+            canvas.restoreToCount(sc);
+
+            // draw the label
+            labelP.setTextSize(20);
+            canvas.drawText(sLabels[i],
+                    x + W / 2, y - labelP.getTextSize() / 2, labelP);
+
+            x += W + 10;
+
+            // wrap around when we've drawn enough for one row
+            if ((i % ROW_MAX) == ROW_MAX - 1) {
+                x = 0;
+                y += H + 30;
+            }
+        }
+    }
+
+    // create a bitmap with a circle, used for the "dst" image
+    // 画圆一个完成的圆
+    private Bitmap makeDst(int w, int h) {
+        Bitmap bm = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(bm);
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+        p.setColor(0xFFFFCC44);
+        c.drawOval(new RectF(0, 0, w, h), p);
+        return bm;
+    }
+
+    // create a bitmap with a rect, used for the "src" image
+    // 矩形右下角留有透明间隙
+    private Bitmap makeSrc(int w, int h) {
+        Bitmap bm = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(bm);
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+        p.setColor(0xFF66AAFF);
+        c.drawRect(0, 0, w * 19 / 20, h * 19 / 20, p);
         return bm;
     }
 }

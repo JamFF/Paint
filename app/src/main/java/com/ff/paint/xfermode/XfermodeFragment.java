@@ -7,15 +7,15 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
-import com.ff.paint.R;
-import com.ff.paint.widget.XfermodeView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.ff.paint.R;
+import com.ff.paint.widget.XfermodeView;
+
 /**
- * description:
+ * description: 离屏绘制
  * author: FF
  * time: 2019/4/1 17:56
  */

@@ -5,6 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.ff.paint.colorfilter.ColorFilterFragment;
 import com.ff.paint.colorfilter.ColorMatrixFragment;
 import com.ff.paint.gradient.BitmapShaderFragment;
@@ -13,9 +16,6 @@ import com.ff.paint.xfermode.GraphicsFragment;
 import com.ff.paint.xfermode.XfermodeEraserFragment;
 import com.ff.paint.xfermode.XfermodeFragment;
 import com.ff.paint.xfermode.XfermodesFragment;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 public class MainActivity extends AppCompatActivity implements MainFragment.OnListItemClickListener {
 
@@ -42,28 +42,28 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnLi
     public void onListItemClick(int position) {
         Fragment fragment;
         switch (position) {
-            case 0:
+            case 0:// 着色器
                 fragment = new GradientFragment();
                 break;
-            case 1:
+            case 1:// 位图着色器
                 fragment = new BitmapShaderFragment();
                 break;
-            case 2:
+            case 2:// 离屏绘制
                 fragment = new XfermodeFragment();
                 break;
-            case 3:
+            case 3:// Google的图形混合模式
                 fragment = new GraphicsFragment();
                 break;
-            case 4:
+            case 4:// 图形混合模式
                 fragment = new XfermodesFragment();
                 break;
-            case 5:
+            case 5:// 刮刮卡效果
                 fragment = new XfermodeEraserFragment();
                 break;
-            case 6:
+            case 6:// 三种滤镜效果
                 fragment = new ColorFilterFragment();
                 break;
-            case 7:
+            case 7:// 更多滤镜效果
                 fragment = new ColorMatrixFragment();
                 break;
             default:

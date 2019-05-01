@@ -17,12 +17,12 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-import com.ff.paint.R;
-
 import androidx.annotation.Nullable;
 
+import com.ff.paint.R;
+
 /**
- * description:
+ * description: 着色器
  * author: FF
  * time: 2019/3/31 21:03
  */
@@ -33,15 +33,15 @@ public class GradientLayout extends View {
     private Paint mPaint;
     private Paint mPaint1;
 
-    private LinearGradient mLinearGradient, mLinearGradient1;
+    private LinearGradient mLinearGradient, mLinearGradient1;// 线性渐变着色器
 
-    private RadialGradient mRadialGradient;
+    private RadialGradient mRadialGradient;// 环形渐变着色器
 
-    private SweepGradient mSweepGradient;
+    private SweepGradient mSweepGradient;// 扫描渐变着色器
 
-    private BitmapShader mBitmapShader;
+    private BitmapShader mBitmapShader;// 位图着色器
 
-    private ComposeShader mComposeShader;
+    private ComposeShader mComposeShader;// 组合着色器
 
     public GradientLayout(Context context) {
         this(context, null);

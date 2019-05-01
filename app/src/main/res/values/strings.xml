@@ -4,13 +4,13 @@
     <string name="on_screen">关闭离屏绘制</string>
 
     <array name="main_items">
-        <item>Gradient</item>
-        <item>BitmapShader</item>
-        <item>Xfermode</item>
-        <item>Xfermode Google Demo</item>
-        <item>Xfermodes</item>
-        <item>XfermodeEraser</item>
-        <item>ColorFilter</item>
-        <item>ColorMatrix</item>
+        <item>着色器</item>
+        <item>位图着色器</item>
+        <item>离屏绘制</item>
+        <item>Google的图形混合模式</item>
+        <item>图形混合模式</item>
+        <item>刮刮卡效果</item>
+        <item>三种滤镜效果</item>
+        <item>更多滤镜效果</item>
     </array>
 </resources>
